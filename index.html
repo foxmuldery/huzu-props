@@ -7,6 +7,20 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a14;color:#ede4d4;font-family:"PingFang SC","Noto Serif SC","STSong","Songti SC",serif;min-height:100vh;overflow-x:hidden}
+html{scroll-behavior:smooth}
+
+/* ── 左侧导航 ── */
+.sidebar{position:fixed;top:0;left:0;width:200px;height:100vh;background:rgba(10,12,22,.95);border-right:1px solid rgba(180,160,120,.12);overflow-y:auto;z-index:100;padding:24px 0 24px 0}
+.sidebar-header{padding:0 20px 16px;border-bottom:1px solid rgba(180,160,120,.1);margin-bottom:8px}
+.sidebar-header h3{font-size:14px;font-weight:400;letter-spacing:.1em;color:#d4c8a8;text-align:center}
+.sidebar-nav{list-style:none;padding:0;margin:0}
+.sidebar-nav li{margin:0}
+.sidebar-nav a{display:block;padding:8px 20px;font-size:12px;letter-spacing:.05em;color:rgba(200,180,140,.5);text-decoration:none;transition:all .2s;border-left:2px solid transparent;line-height:1.4}
+.sidebar-nav a:hover{color:#d4c8a8;background:rgba(180,150,100,.06);border-left-color:rgba(200,170,120,.3)}
+.sidebar-nav a .nav-emoji{font-size:13px;margin-right:4px}
+
+/* ── 主内容区 ── */
+.main-content{margin-left:200px;min-height:100vh}
 
 .hero{position:relative;text-align:center;padding:60px 20px 40px;background:linear-gradient(180deg,#0d1020 0%,#12182b 40%,#0a0a14 100%);border-bottom:1px solid rgba(180,160,120,.15);overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 70% 40%,rgba(255,255,255,.3),transparent),radial-gradient(1.5px 1.5px at 85% 70%,rgba(255,255,255,.5),transparent);pointer-events:none}
@@ -42,11 +56,20 @@ body{background:#0a0a14;color:#ede4d4;font-family:"PingFang SC","Noto Serif SC",
 .lightbox .lb-close:hover{color:rgba(230,215,180,.9)}
 .footer{text-align:center;padding:50px 20px 50px;font-size:14px;letter-spacing:.1em;color:rgba(170,150,110,.4)}
 
-@media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}.main-content{margin-left:0}.sidebar{display:none}}
 @media(max-width:480px){.gallery{grid-template-columns:1fr;gap:12px}.hero{padding:40px 16px 30px}}
 </style>
 </head>
 <body>
+
+<!-- ═══ 左侧导航 ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-header"><h3>🐱 小花猫</h3></div>
+  <ul class="sidebar-nav" id="sidebarNav"></ul>
+</nav>
+
+<!-- ═══ 主内容 ═══ -->
+<div class="main-content">
 
 <header class="hero">
 <p class="ep-title">狐祖归来 · EP01《雪夜孤灯》</p>
@@ -105,12 +128,14 @@ const scenes=[
 ];
 
 const root=document.getElementById("content-root");
+const sidebarNav=document.getElementById("sidebarNav");
 const doneSections=new Set();
 scenes.forEach((sc,i)=>{
 const sec=sc.section;
 if(!doneSections.has(sec)){
 doneSections.add(sec);
-const block=document.createElement("div");block.className="section-block";
+const secId="sec-"+doneSections.size;
+const block=document.createElement("div");block.className="section-block";block.id=secId;
 const title=document.createElement("div");title.className="section-title";
 title.innerHTML=`<div class="line"></div><h2>▎${sec}</h2><div class="line"></div>`;
 block.appendChild(title);
@@ -118,6 +143,12 @@ const gallery=document.createElement("div");gallery.className="gallery";
 gallery.setAttribute("data-section",sec);
 block.appendChild(gallery);
 root.appendChild(block);
+// 侧边栏链接
+const li=document.createElement("li");
+const emoji=sec.replace(/[^\p{Emoji_Presentation}\p{Emoji}\u200d]/gu,'').trim().split(/\s+/)[0]||'';
+const label=sec.replace(/[^\u4e00-\u9fff\w\s·]/g,'').trim();
+li.innerHTML=`<a href="#${secId}"><span class="nav-emoji">${emoji}</span>${label}</a>`;
+sidebarNav.appendChild(li);
 }
 const gal=root.querySelector(`[data-section="${sec}"]`);
 const card=document.createElement("div");card.className="card";
@@ -140,5 +171,6 @@ document.getElementById("lbNext").addEventListener("click",e=>{e.stopPropagation
 lightbox.addEventListener("click",e=>{if(e.target===lightbox)closeLightbox()});
 document.addEventListener("keydown",e=>{if(!lightbox.classList.contains("active"))return;if(e.key==="Escape")closeLightbox();if(e.key==="ArrowLeft")prev();if(e.key==="ArrowRight")next()});
 </script>
+</div>
 </body>
 </html>
