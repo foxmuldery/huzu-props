@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>狐祖归来 EP01 · 小花猫道具图集</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a14;color:#ede4d4;font-family:"PingFang SC","Noto Serif SC","STSong","Songti SC",serif;min-height:100vh;overflow-x:hidden}
+
+.hero{position:relative;text-align:center;padding:60px 20px 40px;background:linear-gradient(180deg,#0d1020 0%,#12182b 40%,#0a0a14 100%);border-bottom:1px solid rgba(180,160,120,.15);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 70% 40%,rgba(255,255,255,.3),transparent),radial-gradient(1.5px 1.5px at 85% 70%,rgba(255,255,255,.5),transparent);pointer-events:none}
+.hero h1{position:relative;font-size:clamp(36px,6vw,60px);font-weight:300;letter-spacing:.15em;color:#e0d4b8;text-shadow:0 0 40px rgba(220,190,130,.35);margin-bottom:8px}
+.hero .ep-title{position:relative;font-size:18px;letter-spacing:.3em;color:rgba(200,180,140,.55);margin-bottom:6px}
+.hero .subtitle{position:relative;font-size:15px;letter-spacing:.2em;color:rgba(190,160,120,.5)}
+
+.section-block{max-width:1400px;margin:0 auto;padding:0 24px}
+.section-title{display:flex;align-items:center;gap:14px;margin:52px 0 24px}
+.section-title:first-of-type{margin-top:36px}
+.section-title .line{flex:1;height:1px;background:rgba(180,160,120,.2)}
+.section-title h2{font-size:17px;font-weight:400;letter-spacing:.2em;color:rgba(210,190,160,.65);white-space:nowrap}
+
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:32px;align-items:start;padding-bottom:8px}
+
+.card{position:relative;background:#111524;border:1px solid rgba(140,120,80,.2);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 30px rgba(180,140,80,.08);border-color:rgba(180,140,80,.4)}
+.card .img-container{width:100%;overflow:hidden;background:#0a0d16}
+.card .img-container img{width:100%;height:auto;display:block;transition:transform .5s ease}
+.card:hover img{transform:scale(1.03)}
+.card .label{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(180deg,rgba(17,21,36,0) 0%,#111524 100%)}
+.card .label .scene-name{font-size:16px;color:#d4c8a8;letter-spacing:.05em;text-align:right;line-height:1.4}
+.card .label .scene-script{font-size:13px;color:rgba(210,190,160,.55);letter-spacing:.03em;line-height:1.6}
+
+.lightbox{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,5,15,.95);backdrop-filter:blur(10px);justify-content:center;align-items:center;flex-direction:column}
+.lightbox.active{display:flex}
+.lightbox img{max-width:92vw;max-height:82vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lightbox .lb-info{margin-top:18px;font-size:16px;letter-spacing:.08em;color:rgba(215,200,170,.75);text-align:center;max-width:700px;line-height:1.7}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:48px;color:rgba(215,200,170,.45);cursor:pointer;user-select:none;padding:20px;transition:color .2s;z-index:1001}
+.lb-nav:hover{color:rgba(230,215,180,.9)}
+.lb-prev{left:20px}.lb-next{right:20px}
+.lightbox .lb-close{position:absolute;top:24px;right:36px;font-size:42px;color:rgba(215,200,170,.55);cursor:pointer;transition:color .2s;z-index:1001}
+.lightbox .lb-close:hover{color:rgba(230,215,180,.9)}
+.footer{text-align:center;padding:50px 20px 50px;font-size:14px;letter-spacing:.1em;color:rgba(170,150,110,.4)}
+
+@media(max-width:480px){.gallery{grid-template-columns:1fr;gap:20px}.hero{padding:40px 16px 30px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+<p class="ep-title">狐祖归来 · EP01《雪夜孤灯》</p>
+<h1>小 花 猫</h1>
+<p class="subtitle">道具角色图集 · 十四张</p>
+</header>
+
+<div id="content-root"></div>
+
+<div class="lightbox" id="lightbox">
+<span class="lb-close" id="lbClose">&times;</span>
+<span class="lb-nav lb-prev" id="lbPrev">&#8249;</span>
+<img src="" alt="" id="lbImg">
+<div class="lb-info" id="lbInfo"></div>
+<span class="lb-nav lb-next" id="lbNext">&#8250;</span>
+</div>
+<div class="footer">狐祖归来 · 雪夜孤灯 · 小花猫道具</div>
+
+<script>
+const scenes=[
+// ── 守灯长廊 · 瓦洞坠落 ──
+{file:"web/01_守灯长廊_瓦洞坠落_惊恐蜷缩.jpeg",name:"惊恐蜷缩",script:"「檐下积雪、碎瓦和一只躲在瓦洞里的小花猫同时坠落。」浑身湿透，低伏蜷缩，飞机耳——坠落后的极度惊恐",section:"🐱 守灯长廊 · 瓦洞坠落"},
+{file:"web/01_守灯长廊_瓦洞坠落_带伤侧立.jpeg",name:"带伤侧立",script:"左腿可见擦伤。侧面站立，弓背戒备，眼神警惕——坠落后的求生本能",section:"🐱 守灯长廊 · 瓦洞坠落"},
+
+// ── 守灯长廊 · 雪娘救猫 ──
+{file:"web/02_守灯长廊_雪娘救猫_受惊特写.jpeg",name:"受惊特写",script:"「小猫受惊，狠狠抓破雪娘的手背。雪娘疼得缩了一下，却仍把它护进怀里。」泥泞湿身，正脸特写，眼神惊恐而坚韧",section:"🤲 守灯长廊 · 雪娘救猫"},
+
+// ── 守灯长廊 · 王玄晏对峙 ──
+{file:"web/03_守灯长廊_王玄晏对峙_正面炸毛.jpeg",name:"正面炸毛",script:"「小猫对着他猛然炸毛，瞳孔缩成细线。」正脸冷峻凝视，琥珀色瞳孔紧缩——面对白狐少主的本能敌意",section:"⚡ 守灯长廊 · 王玄晏对峙"},
+{file:"web/03_守灯长廊_王玄晏对峙_侧面炸毛.jpeg",name:"侧面炸毛",script:"侧面视角——耳尖压低，胡须张开，全身绷紧，蓄势待发的防卫姿态",section:"⚡ 守灯长廊 · 王玄晏对峙"},
+
+// ── 雪庭 · 衣襟发抖 ──
+{file:"web/04_雪庭_衣襟发抖_仰头乞求.jpeg",name:"仰头乞求",script:"「小猫在雪娘怀里发抖，发出很轻的一声叫。」俯拍视角，仰头向上看——脆弱、无助、向怀中人乞求庇护",section:"❄️ 雪庭 · 衣襟发抖"},
+
+// ── 灶房 · 笼门初启 ──
+{file:"web/05_灶房_笼门初启_小心行走.jpeg",name:"小心行走",script:"「阿檀掀开笼门，小猫钻出来。」侧身小心翼翼迈步，身体低伏，在新环境中探索",section:"📦 灶房 · 笼门初启"},
+{file:"web/05_灶房_笼门初启_背影躲藏.jpeg",name:"背影躲藏",script:"「躲到柴堆后面。」正后方视角，背部可见剃毛痕迹——向黑暗深处躲藏的孤单背影",section:"📦 灶房 · 笼门初启"},
+
+// ── 灶房 · 拒食栗子 ──
+{file:"web/06_灶房_拒食栗子_委屈扭头.jpeg",name:"委屈扭头",script:"「小猫闻了闻，扭开头。猫不吃栗子。」侧脸特写，眼神迷茫委屈——面对陌生的栗子饼不知所措",section:"🌰 灶房 · 拒食栗子"},
+
+// ── 灶房 · 叼走鱼肉 ──
+{file:"web/07_灶房_叼走鱼肉_仰头急探.jpeg",name:"仰头急探",script:"「小猫立刻探出头，叼走鱼肉。」仰头向上看——阿檀从祭宴案上偷来鱼肉的一瞬",section:"🐟 灶房 · 叼走鱼肉"},
+
+// ── 灶房 · 灶门炸毛 ──
+{file:"web/08_灶房_灶门炸毛_门边凝视.jpeg",name:"门边凝视",script:"「小猫忽然对着灶房门炸毛。门外传来狐侍的脚步。」左侧面专注凝视门外——察觉狐侍靠近的本能警觉",section:"🚪 灶房 · 灶门炸毛"},
+
+// ── 灶房后廊 · 青玉环炸毛 ──
+{file:"web/09_灶房后廊_青玉环炸毛_低呜戒备.jpeg",name:"低呜戒备",script:"「小猫看见雪娘腕上的青玉环，立刻炸毛，发出低沉的呜声。」右侧面，耳向后压，低沉戒备——对雷纹的直觉恐惧",section:"💍 灶房后廊 · 青玉环炸毛"},
+
+// ── 灶房后廊 · 雪娘抚摸 ──
+{file:"web/10_灶房后廊_雪娘抚摸_平静站立.jpeg",name:"平静站立",script:"「雪娘摸了摸小猫的头。小猫先是躲，随后没有再抓她。」正脸直立，眼神归于平静——第一次信任",section:"✋ 灶房后廊 · 雪娘抚摸"},
+
+// ── 参考 ──
+{file:"web/11_参考_正面标准_警觉凝视.jpeg",name:"正面标准 · 警觉凝视",script:"全身正面站立，凝重视线。琥珀双眸，虎斑纹路清晰——角色标准参考图",section:"📋 角色参考"},
+];
+
+const root=document.getElementById("content-root");
+const doneSections=new Set();
+scenes.forEach((sc,i)=>{
+const sec=sc.section;
+if(!doneSections.has(sec)){
+doneSections.add(sec);
+const block=document.createElement("div");block.className="section-block";
+const title=document.createElement("div");title.className="section-title";
+title.innerHTML=`<div class="line"></div><h2>▎${sec}</h2><div class="line"></div>`;
+block.appendChild(title);
+const gallery=document.createElement("div");gallery.className="gallery";
+gallery.setAttribute("data-section",sec);
+block.appendChild(gallery);
+root.appendChild(block);
+}
+const gal=root.querySelector(`[data-section="${sec}"]`);
+const card=document.createElement("div");card.className="card";
+card.setAttribute("data-index",i);
+card.innerHTML=`<div class="img-container"><img src="${sc.file}" alt="${sc.name}" loading="lazy"></div><div class="label"><div style="text-align:right;min-width:0;"><div class="scene-name">${sc.name}</div><div class="scene-script">${sc.script}</div></div></div>`;
+card.addEventListener("click",()=>openLightbox(i));
+gal.appendChild(card);
+});
+
+const lightbox=document.getElementById("lightbox"),lbImg=document.getElementById("lbImg"),lbInfo=document.getElementById("lbInfo");
+let cur=0;
+function openLightbox(i){cur=i;updateLb();lightbox.classList.add("active");document.body.style.overflow="hidden"}
+function closeLightbox(){lightbox.classList.remove("active");document.body.style.overflow=""}
+function updateLb(){var s=scenes[cur];lbImg.src=s.file;lbImg.alt=s.name;lbInfo.innerHTML=`<b>${s.name}</b> &nbsp;·&nbsp; ${cur+1}/${scenes.length}<br><span style="font-size:14px;color:rgba(210,190,160,.55)">${s.script}</span>`}
+function prev(){cur=(cur-1+scenes.length)%scenes.length;updateLb()}
+function next(){cur=(cur+1)%scenes.length;updateLb()}
+document.getElementById("lbClose").addEventListener("click",closeLightbox);
+document.getElementById("lbPrev").addEventListener("click",e=>{e.stopPropagation();prev()});
+document.getElementById("lbNext").addEventListener("click",e=>{e.stopPropagation();next()});
+lightbox.addEventListener("click",e=>{if(e.target===lightbox)closeLightbox()});
+document.addEventListener("keydown",e=>{if(!lightbox.classList.contains("active"))return;if(e.key==="Escape")closeLightbox();if(e.key==="ArrowLeft")prev();if(e.key==="ArrowRight")next()});
+</script>
+</body>
+</html>
