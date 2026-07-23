@@ -56,11 +56,31 @@ html{scroll-behavior:smooth}
 .lightbox .lb-close:hover{color:rgba(230,215,180,.9)}
 .footer{text-align:center;padding:50px 20px 50px;font-size:14px;letter-spacing:.1em;color:rgba(170,150,110,.4)}
 
+/* ── 密码门 ── */
+.pw-gate{position:fixed;inset:0;z-index:9999;background:rgba(8,8,18,.97);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.pw-gate.hidden{display:none}
+.pw-gate h2{font-size:28px;font-weight:300;letter-spacing:.15em;color:#d4c8a8;margin-bottom:8px}
+.pw-gate .pw-sub{font-size:14px;color:rgba(180,160,120,.4);margin-bottom:28px;letter-spacing:.1em}
+.pw-gate input{width:260px;padding:10px 16px;font-size:16px;background:rgba(20,24,40,.8);border:1px solid rgba(180,150,100,.25);border-radius:4px;color:#ede4d4;text-align:center;letter-spacing:.3em;outline:none;transition:border-color .2s}
+.pw-gate input:focus{border-color:rgba(200,170,120,.5)}
+.pw-gate button{margin-top:14px;padding:10px 40px;font-size:15px;letter-spacing:.12em;color:#d4c8a8;background:rgba(180,150,100,.08);border:1px solid rgba(180,150,100,.3);border-radius:4px;cursor:pointer;transition:all .2s}
+.pw-gate button:hover{background:rgba(180,150,100,.15);border-color:rgba(200,170,120,.5)}
+.pw-err{color:#c96e6e;font-size:13px;margin-top:12px;letter-spacing:.05em;min-height:20px}
+
 @media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}.main-content{margin-left:0}.sidebar{display:none}}
 @media(max-width:480px){.gallery{grid-template-columns:1fr;gap:12px}.hero{padding:40px 16px 30px}}
 </style>
 </head>
 <body>
+
+<!-- ═══ 密码门 ═══ -->
+<div class="pw-gate" id="pwGate">
+  <h2>狐祖归来</h2>
+  <p class="pw-sub">请输入访问密码</p>
+  <input type="password" id="pwInput" placeholder="····" onkeydown="if(event.key==='Enter')checkPw()">
+  <button onclick="checkPw()">进入</button>
+  <div class="pw-err" id="pwErr"></div>
+</div>
 
 <!-- ═══ 左侧导航 ═══ -->
 <nav class="sidebar">
@@ -89,6 +109,11 @@ html{scroll-behavior:smooth}
 <div class="footer">狐祖归来 · 雪夜孤灯 · 小花猫道具</div>
 
 <script>
+// ── 密码验证 ──
+const PW_HASH="019be397cf10ba2e242d7507db0852b1dcab423c62bd150024ef1333a68136aa";
+(function(){if(sessionStorage.getItem("huzu_auth")==="1"){document.getElementById("pwGate").classList.add("hidden")}})();
+async function checkPw(){const input=document.getElementById("pwInput").value;const err=document.getElementById("pwErr");if(!input){err.textContent="请输入密码";return}const h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(input));const hex=Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("");if(hex===PW_HASH){document.getElementById("pwGate").classList.add("hidden");sessionStorage.setItem("huzu_auth","1")}else{err.textContent="密码错误"}}
+
 const scenes=[
 // ── 守灯长廊 · 瓦洞坠落 ──
 {file:"web/01_守灯长廊_瓦洞坠落_惊恐蜷缩.jpeg",name:"惊恐蜷缩",script:"「檐下积雪、碎瓦和一只躲在瓦洞里的小花猫同时坠落。」浑身湿透，低伏蜷缩，飞机耳——坠落后的极度惊恐",section:"🐱 守灯长廊 · 瓦洞坠落"},
