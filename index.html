@@ -59,6 +59,11 @@ html{scroll-behavior:smooth}
 .lightbox .lb-close:hover{color:rgba(230,215,180,.9)}
 .footer{text-align:center;padding:50px 20px 50px;font-size:14px;letter-spacing:.1em;color:rgba(170,150,110,.4)}
 
+/* ── 分类导航条 ── */
+.cat-nav{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.cat-nav a{font-size:13px;letter-spacing:.08em;color:rgba(200,180,140,.55);text-decoration:none;padding:6px 16px;border:1px solid rgba(180,150,100,.15);border-radius:20px;transition:all .2s}
+.cat-nav a:hover,.cat-nav a.active{color:#d4c8a8;border-color:rgba(200,170,120,.4);background:rgba(180,150,100,.06)}
+
 /* ── 密码门 ── */
 .pw-gate{position:fixed;inset:0;z-index:9999;background:rgba(8,8,18,.97);display:flex;align-items:center;justify-content:center;flex-direction:column}
 .pw-gate.hidden{display:none}
@@ -100,6 +105,9 @@ html{scroll-behavior:smooth}
 <p class="subtitle">狐祖归来 EP01 · 雪夜孤灯 · 二十二件</p>
 </header>
 
+<!-- ═══ 分类导航 ═══ -->
+<nav class="cat-nav" id="catNav"></nav>
+
 <div id="content-root"></div>
 
 <div class="lightbox" id="lightbox">
@@ -132,6 +140,7 @@ const scenes=[
 {cat:"🐱 生物 · 小花猫",file:"web/08_灶房_灶门炸毛_门边凝视.jpeg",name:"门边凝视",script:"「小猫忽然对着灶房门炸毛。」左侧面专注凝视门外",section:"灶房 · 灶门炸毛"},
 {cat:"🐱 生物 · 小花猫",file:"web/09_灶房后廊_青玉环炸毛_低呜戒备.jpeg",name:"低呜戒备",script:"「小猫看见雪娘腕上的青玉环，立刻炸毛。」右侧面，耳向后压",section:"灶房后廊 · 青玉环炸毛"},
 {cat:"🐱 生物 · 小花猫",file:"web/10_灶房后廊_雪娘抚摸_平静站立.jpeg",name:"平静站立",script:"「雪娘摸了摸小猫的头。小猫先是躲，随后没有再抓她。」正脸直立，眼神归于平静",section:"灶房后廊 · 雪娘抚摸"},
+{cat:"🐱 生物 · 小花猫",file:"web/11_参考_正面标准_警觉凝视.jpeg",name:"正面标准 · 警觉凝视",script:"全身正面站立，凝重视线。琥珀双眸，虎斑纹路清晰——角色标准参考图",section:"角色参考"},
 
 // ── 法器 · 青玉护环 ──
 {cat:"💍 法器 · 青玉护环",file:"web/青玉护环_黑木匣中.jpeg",name:"黑木匣中",script:"「狐侍打开黑木匣。匣中是一只青玉护环，玉中藏着极细的暗金雷纹。」墨绿青玉，金丝脉络如雷纹蔓延",section:"雷纹法器"},
@@ -144,14 +153,12 @@ const scenes=[
 {cat:"🔧 饰物 · 旧银簪",file:"web/狐祖归来_旧银簪_左侧视图.jpeg",name:"左侧视图",script:"侧面轮廓——可以看到簪身的弧度与尖端。正是这尖端撬开了青玉环",section:"道具展示"},
 {cat:"🔧 饰物 · 旧银簪",file:"web/狐祖归来_旧银簪_后视图.jpeg",name:"后视图",script:"背面视角——簪身略有弯曲痕迹，见证过撬动硬物的力量",section:"道具展示"},
 {cat:"🔧 饰物 · 旧银簪",file:"web/狐祖归来_旧银簪_微距材质.jpeg",name:"微距材质",script:"「她把银簪刺进第一枚骨钉根部，用尽全力一撬。」极近距离——氧化暗纹、使用划痕、银质包浆的岁月质感",section:"道具展示"},
-
-// ── 参考 ──
-{cat:"📋 参考",file:"web/11_参考_正面标准_警觉凝视.jpeg",name:"正面标准 · 警觉凝视",script:"全身正面站立，凝重视线。琥珀双眸，虎斑纹路清晰——角色标准参考图",section:"正面标准"},
 ];
 
 const root=document.getElementById("content-root");
 const sidebarNav=document.getElementById("sidebarNav");
-const doneKeys=new Set();
+const catNav=document.getElementById("catNav");
+const doneKeys=new Set(),catFirstId={};
 let secIdx=0;
 scenes.forEach((sc,i)=>{
 const cat=sc.cat||"",sec=sc.section,key=cat+"|||"+sec;
@@ -164,6 +171,7 @@ if(!doneKeys.has(key)){
 doneKeys.add(key);
 secIdx++;
 const secId="sec-"+secIdx;
+if(!catFirstId[cat]) catFirstId[cat]=secId;
 const block=document.createElement("div");block.className="section-block";block.id=secId;
 const title=document.createElement("div");title.className="section-title";
 title.innerHTML=`<div class="line"></div><h2>▎${sec}</h2><div class="line"></div>`;
@@ -183,6 +191,11 @@ card.setAttribute("data-index",i);
 card.innerHTML=`<div class="img-container"><img src="${sc.file}" alt="${sc.name}" loading="lazy"></div><div class="label"><div style="text-align:right;min-width:0;"><div class="scene-name">${sc.name}</div><div class="scene-script">${sc.script}</div></div></div>`;
 card.addEventListener("click",()=>openLightbox(i));
 gal.appendChild(card);
+});
+
+// 顶部分类导航
+Object.entries(catFirstId).forEach(([cat,id])=>{
+const a=document.createElement("a");a.href="#"+id;a.textContent=cat;catNav.appendChild(a);
 });
 
 const lightbox=document.getElementById("lightbox"),lbImg=document.getElementById("lbImg"),lbInfo=document.getElementById("lbInfo");
