@@ -17,6 +17,9 @@ html{scroll-behavior:smooth}
 .sidebar-nav li{margin:0}
 .sidebar-nav a{display:block;padding:8px 20px;font-size:12px;letter-spacing:.05em;color:rgba(200,180,140,.5);text-decoration:none;transition:all .2s;border-left:2px solid transparent;line-height:1.4}
 .sidebar-nav a:hover{color:#d4c8a8;background:rgba(180,150,100,.06);border-left-color:rgba(200,170,120,.3)}
+.sidebar-nav a.nav-sub{padding-left:32px;font-size:11px;color:rgba(180,160,120,.4)}
+.sidebar-nav a.nav-sub:hover{color:rgba(210,180,140,.7)}
+.sidebar-nav .nav-cat{padding:12px 20px 4px;font-size:13px;font-weight:400;letter-spacing:.08em;color:#c8b898;border-bottom:1px solid rgba(180,160,120,.08);margin:8px 0 4px}
 .sidebar-nav a .nav-emoji{font-size:13px;margin-right:4px}
 
 /* ── 主内容区 ── */
@@ -84,7 +87,7 @@ html{scroll-behavior:smooth}
 
 <!-- ═══ 左侧导航 ═══ -->
 <nav class="sidebar">
-  <div class="sidebar-header"><h3>🐱 小花猫</h3></div>
+  <div class="sidebar-header"><h3>道具目录</h3></div>
   <ul class="sidebar-nav" id="sidebarNav"></ul>
 </nav>
 
@@ -93,8 +96,8 @@ html{scroll-behavior:smooth}
 
 <header class="hero">
 <p class="ep-title">狐祖归来 · EP01《雪夜孤灯》</p>
-<h1>小 花 猫</h1>
-<p class="subtitle">道具角色图集 · 十七张</p>
+<h1>道具图集</h1>
+<p class="subtitle">狐祖归来 EP01 · 雪夜孤灯 · 十七件</p>
 </header>
 
 <div id="content-root"></div>
@@ -115,72 +118,59 @@ const PW_HASH="019be397cf10ba2e242d7507db0852b1dcab423c62bd150024ef1333a68136aa"
 async function checkPw(){const input=document.getElementById("pwInput").value;const err=document.getElementById("pwErr");if(!input){err.textContent="请输入密码";return}const h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(input));const hex=Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("");if(hex===PW_HASH){document.getElementById("pwGate").classList.add("hidden");sessionStorage.setItem("huzu_auth","1")}else{err.textContent="密码错误"}}
 
 const scenes=[
-// ── 守灯长廊 · 瓦洞坠落 ──
-{file:"web/01_守灯长廊_瓦洞坠落_惊恐蜷缩.jpeg",name:"惊恐蜷缩",script:"「檐下积雪、碎瓦和一只躲在瓦洞里的小花猫同时坠落。」浑身湿透，低伏蜷缩，飞机耳——坠落后的极度惊恐",section:"🐱 守灯长廊 · 瓦洞坠落"},
-{file:"web/01_守灯长廊_瓦洞坠落_带伤侧立.jpeg",name:"带伤侧立",script:"左腿可见擦伤。侧面站立，弓背戒备，眼神警惕——坠落后的求生本能",section:"🐱 守灯长廊 · 瓦洞坠落"},
+// ── 生物 · 小花猫 ──
+{cat:"🐱 生物 · 小花猫",file:"web/01_守灯长廊_瓦洞坠落_惊恐蜷缩.jpeg",name:"惊恐蜷缩",script:"「檐下积雪、碎瓦和一只躲在瓦洞里的小花猫同时坠落。」浑身湿透，低伏蜷缩，飞机耳——坠落后的极度惊恐",section:"守灯长廊 · 瓦洞坠落"},
+{cat:"🐱 生物 · 小花猫",file:"web/01_守灯长廊_瓦洞坠落_带伤侧立.jpeg",name:"带伤侧立",script:"左腿可见擦伤。侧面站立，弓背戒备，眼神警惕——坠落后的求生本能",section:"守灯长廊 · 瓦洞坠落"},
+{cat:"🐱 生物 · 小花猫",file:"web/02_守灯长廊_雪娘救猫_受惊特写.jpeg",name:"受惊特写",script:"「小猫受惊，狠狠抓破雪娘的手背。」泥泞湿身，正脸特写，眼神惊恐而坚韧",section:"守灯长廊 · 雪娘救猫"},
+{cat:"🐱 生物 · 小花猫",file:"web/03_守灯长廊_王玄晏对峙_正面炸毛.jpeg",name:"正面炸毛",script:"「小猫对着他猛然炸毛，瞳孔缩成细线。」正脸冷峻凝视，琥珀色瞳孔紧缩",section:"守灯长廊 · 王玄晏对峙"},
+{cat:"🐱 生物 · 小花猫",file:"web/03_守灯长廊_王玄晏对峙_侧面炸毛.jpeg",name:"侧面炸毛",script:"侧面视角——耳尖压低，胡须张开，全身绷紧，蓄势待发的防卫姿态",section:"守灯长廊 · 王玄晏对峙"},
+{cat:"🐱 生物 · 小花猫",file:"web/04_雪庭_衣襟发抖_仰头乞求.jpeg",name:"仰头乞求",script:"「小猫在雪娘怀里发抖，发出很轻的一声叫。」俯拍视角，仰头向上看",section:"雪庭 · 衣襟发抖"},
+{cat:"🐱 生物 · 小花猫",file:"web/05_灶房_笼门初启_小心行走.jpeg",name:"小心行走",script:"「阿檀掀开笼门，小猫钻出来。」侧身小心翼翼迈步，身体低伏",section:"灶房 · 笼门初启"},
+{cat:"🐱 生物 · 小花猫",file:"web/05_灶房_笼门初启_背影躲藏.jpeg",name:"背影躲藏",script:"「躲到柴堆后面。」正后方视角，背部可见剃毛痕迹",section:"灶房 · 笼门初启"},
+{cat:"🐱 生物 · 小花猫",file:"web/06_灶房_拒食栗子_委屈扭头.jpeg",name:"委屈扭头",script:"「小猫闻了闻，扭开头。猫不吃栗子。」侧脸特写，眼神迷茫委屈",section:"灶房 · 拒食栗子"},
+{cat:"🐱 生物 · 小花猫",file:"web/07_灶房_叼走鱼肉_仰头急探.jpeg",name:"仰头急探",script:"「小猫立刻探出头，叼走鱼肉。」仰头向上看",section:"灶房 · 叼走鱼肉"},
+{cat:"🐱 生物 · 小花猫",file:"web/08_灶房_灶门炸毛_门边凝视.jpeg",name:"门边凝视",script:"「小猫忽然对着灶房门炸毛。」左侧面专注凝视门外",section:"灶房 · 灶门炸毛"},
+{cat:"🐱 生物 · 小花猫",file:"web/09_灶房后廊_青玉环炸毛_低呜戒备.jpeg",name:"低呜戒备",script:"「小猫看见雪娘腕上的青玉环，立刻炸毛。」右侧面，耳向后压",section:"灶房后廊 · 青玉环炸毛"},
+{cat:"🐱 生物 · 小花猫",file:"web/10_灶房后廊_雪娘抚摸_平静站立.jpeg",name:"平静站立",script:"「雪娘摸了摸小猫的头。小猫先是躲，随后没有再抓她。」正脸直立，眼神归于平静",section:"灶房后廊 · 雪娘抚摸"},
 
-// ── 守灯长廊 · 雪娘救猫 ──
-{file:"web/02_守灯长廊_雪娘救猫_受惊特写.jpeg",name:"受惊特写",script:"「小猫受惊，狠狠抓破雪娘的手背。雪娘疼得缩了一下，却仍把它护进怀里。」泥泞湿身，正脸特写，眼神惊恐而坚韧",section:"🤲 守灯长廊 · 雪娘救猫"},
+// ── 法器 · 青玉护环 ──
+{cat:"💍 法器 · 青玉护环",file:"web/青玉护环_黑木匣中.jpeg",name:"黑木匣中",script:"「狐侍打开黑木匣。匣中是一只青玉护环，玉中藏着极细的暗金雷纹。」墨绿青玉，金丝脉络如雷纹蔓延",section:"雷纹法器"},
+{cat:"💍 法器 · 青玉护环",file:"web/青玉护环_设计透视图.jpeg",name:"设计透视图",script:"C形开口环，兽首端头雕刻。三视角展示玉环厚度、内壁金丝网络与卡榫细节",section:"雷纹法器"},
+{cat:"💍 法器 · 青玉护环",file:"web/青玉护环_岩上雷光.jpeg",name:"岩上雷光",script:"「玉环中的暗金雷纹从她手腕一路钻入血肉。」青玉置于黑岩之上，暗光中金丝如雷电流转",section:"雷纹法器"},
 
-// ── 守灯长廊 · 王玄晏对峙 ──
-{file:"web/03_守灯长廊_王玄晏对峙_正面炸毛.jpeg",name:"正面炸毛",script:"「小猫对着他猛然炸毛，瞳孔缩成细线。」正脸冷峻凝视，琥珀色瞳孔紧缩——面对白狐少主的本能敌意",section:"⚡ 守灯长廊 · 王玄晏对峙"},
-{file:"web/03_守灯长廊_王玄晏对峙_侧面炸毛.jpeg",name:"侧面炸毛",script:"侧面视角——耳尖压低，胡须张开，全身绷紧，蓄势待发的防卫姿态",section:"⚡ 守灯长廊 · 王玄晏对峙"},
-
-// ── 雪庭 · 衣襟发抖 ──
-{file:"web/04_雪庭_衣襟发抖_仰头乞求.jpeg",name:"仰头乞求",script:"「小猫在雪娘怀里发抖，发出很轻的一声叫。」俯拍视角，仰头向上看——脆弱、无助、向怀中人乞求庇护",section:"❄️ 雪庭 · 衣襟发抖"},
-
-// ── 灶房 · 笼门初启 ──
-{file:"web/05_灶房_笼门初启_小心行走.jpeg",name:"小心行走",script:"「阿檀掀开笼门，小猫钻出来。」侧身小心翼翼迈步，身体低伏，在新环境中探索",section:"📦 灶房 · 笼门初启"},
-{file:"web/05_灶房_笼门初启_背影躲藏.jpeg",name:"背影躲藏",script:"「躲到柴堆后面。」正后方视角，背部可见剃毛痕迹——向黑暗深处躲藏的孤单背影",section:"📦 灶房 · 笼门初启"},
-
-// ── 灶房 · 拒食栗子 ──
-{file:"web/06_灶房_拒食栗子_委屈扭头.jpeg",name:"委屈扭头",script:"「小猫闻了闻，扭开头。猫不吃栗子。」侧脸特写，眼神迷茫委屈——面对陌生的栗子饼不知所措",section:"🌰 灶房 · 拒食栗子"},
-
-// ── 灶房 · 叼走鱼肉 ──
-{file:"web/07_灶房_叼走鱼肉_仰头急探.jpeg",name:"仰头急探",script:"「小猫立刻探出头，叼走鱼肉。」仰头向上看——阿檀从祭宴案上偷来鱼肉的一瞬",section:"🐟 灶房 · 叼走鱼肉"},
-
-// ── 灶房 · 灶门炸毛 ──
-{file:"web/08_灶房_灶门炸毛_门边凝视.jpeg",name:"门边凝视",script:"「小猫忽然对着灶房门炸毛。门外传来狐侍的脚步。」左侧面专注凝视门外——察觉狐侍靠近的本能警觉",section:"🚪 灶房 · 灶门炸毛"},
-
-// ── 灶房后廊 · 青玉环炸毛 ──
-{file:"web/09_灶房后廊_青玉环炸毛_低呜戒备.jpeg",name:"低呜戒备",script:"「小猫看见雪娘腕上的青玉环，立刻炸毛，发出低沉的呜声。」右侧面，耳向后压，低沉戒备——对雷纹的直觉恐惧",section:"💍 灶房后廊 · 青玉环炸毛"},
-
-// ── 灶房后廊 · 雪娘抚摸 ──
-{file:"web/10_灶房后廊_雪娘抚摸_平静站立.jpeg",name:"平静站立",script:"「雪娘摸了摸小猫的头。小猫先是躲，随后没有再抓她。」正脸直立，眼神归于平静——第一次信任",section:"✋ 灶房后廊 · 雪娘抚摸"},
-
-// ── 青玉护环 · 雷纹法器 ──
-{file:"web/青玉护环_黑木匣中.jpeg",name:"黑木匣中",script:"「狐侍打开黑木匣。匣中是一只青玉护环，玉中藏着极细的暗金雷纹。」墨绿青玉，金丝脉络如雷纹蔓延伸展",section:"💍 青玉护环 · 雷纹法器"},
-{file:"web/青玉护环_设计透视图.jpeg",name:"设计透视图",script:"C形开口环，兽首端头雕刻。三视角展示玉环厚度、内壁金丝网络与卡榫细节——概念设计参照",section:"💍 青玉护环 · 雷纹法器"},
-{file:"web/青玉护环_岩上雷光.jpeg",name:"岩上雷光",script:"「玉环中的暗金雷纹从她手腕一路钻入血肉。」青玉置于黑岩之上，暗光中金丝如雷电流转——献祭前兆",section:"💍 青玉护环 · 雷纹法器"},
-
-// ── 角色参考 ──
-{file:"web/11_参考_正面标准_警觉凝视.jpeg",name:"正面标准 · 警觉凝视",script:"全身正面站立，凝重视线。琥珀双眸，虎斑纹路清晰——角色标准参考图",section:"📋 角色参考"},
+// ── 参考 ──
+{cat:"📋 参考",file:"web/11_参考_正面标准_警觉凝视.jpeg",name:"正面标准 · 警觉凝视",script:"全身正面站立，凝重视线。琥珀双眸，虎斑纹路清晰——角色标准参考图",section:"正面标准"},
 ];
 
 const root=document.getElementById("content-root");
 const sidebarNav=document.getElementById("sidebarNav");
-const doneSections=new Set();
+const doneKeys=new Set();
+let secIdx=0;
 scenes.forEach((sc,i)=>{
-const sec=sc.section;
-if(!doneSections.has(sec)){
-doneSections.add(sec);
-const secId="sec-"+doneSections.size;
+const cat=sc.cat||"",sec=sc.section,key=cat+"|||"+sec;
+if(!doneKeys.has(cat)){
+doneKeys.add(cat);
+// 侧边栏分类头
+const catDiv=document.createElement("div");catDiv.className="nav-cat";catDiv.textContent=cat;sidebarNav.appendChild(catDiv);
+}
+if(!doneKeys.has(key)){
+doneKeys.add(key);
+secIdx++;
+const secId="sec-"+secIdx;
 const block=document.createElement("div");block.className="section-block";block.id=secId;
 const title=document.createElement("div");title.className="section-title";
 title.innerHTML=`<div class="line"></div><h2>▎${sec}</h2><div class="line"></div>`;
 block.appendChild(title);
 const gallery=document.createElement("div");gallery.className="gallery";
-gallery.setAttribute("data-section",sec);
+gallery.setAttribute("data-key",key);
 block.appendChild(gallery);
 root.appendChild(block);
-// 侧边栏链接
+// 侧边栏子链接
 const li=document.createElement("li");
-const emoji=sec.replace(/[^\p{Emoji_Presentation}\p{Emoji}\u200d]/gu,'').trim().split(/\s+/)[0]||'';
-const label=sec.replace(/[^\u4e00-\u9fff\w\s·]/g,'').trim();
-li.innerHTML=`<a href="#${secId}"><span class="nav-emoji">${emoji}</span>${label}</a>`;
+li.innerHTML=`<a href="#${secId}" class="nav-sub">${sec}</a>`;
 sidebarNav.appendChild(li);
 }
-const gal=root.querySelector(`[data-section="${sec}"]`);
+const gal=root.querySelector(`[data-key="${key}"]`);
 const card=document.createElement("div");card.className="card";
 card.setAttribute("data-index",i);
 card.innerHTML=`<div class="img-container"><img src="${sc.file}" alt="${sc.name}" loading="lazy"></div><div class="label"><div style="text-align:right;min-width:0;"><div class="scene-name">${sc.name}</div><div class="scene-script">${sc.script}</div></div></div>`;
